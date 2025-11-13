@@ -210,6 +210,7 @@ This agent ensures **backend logic stays database-independent**.
   "cb_after": -340.95,
   "applied": 0
 }
+```
 (B) Banking surplus
 UI calls bankSurplus(shipId, year)
 
