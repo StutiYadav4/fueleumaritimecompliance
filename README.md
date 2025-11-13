@@ -1,72 +1,64 @@
-# Fuel EU Maritime Compliance Backend
+# Fuel EU Maritime Compliance Platform
 
 ## Overview
-This backend service is designed to support the Fuel EU Maritime compliance platform. It provides APIs for managing routes, calculating compliance balances, and handling banking and pooling operations as per the Fuel EU Maritime Regulation (EU) 2023/1805.
+The Fuel EU Maritime Compliance Platform is designed to facilitate compliance with the Fuel EU Maritime Regulation (EU) 2023/1805. This platform consists of a frontend dashboard built with React, TypeScript, and TailwindCSS, and a backend API developed using Node.js, TypeScript, and PostgreSQL. The application provides functionalities for managing routes, compliance balance, banking, and pooling.
 
-## Architecture
-The backend follows a Hexagonal Architecture (Ports & Adapters) which separates the core business logic from the infrastructure and presentation layers. The core contains domain models, application use cases, and ports for repositories. The adapters implement the inbound HTTP routes and outbound database interactions.
+## Architecture Summary
+The project follows a hexagonal architecture (Ports & Adapters / Clean Architecture) to ensure a clear separation of concerns. The core of the application contains domain entities, application logic, and ports, while the adapters handle the user interface and infrastructure interactions.
 
-### Core Structure
-- **Domain**: Contains the core business models and services.
-- **Application**: Contains use cases that define the application's business logic.
-- **Ports**: Interfaces for repositories that abstract data access.
+### Frontend Structure
+- **Core**: Contains domain entities, application use cases, and ports.
+- **Adapters**: 
+  - **UI**: React components and hooks implementing inbound ports.
+  - **Infrastructure**: API clients implementing outbound ports.
+- **Shared**: Contains shared constants and utility functions.
 
-### Adapters
-- **Inbound**: HTTP routes for handling requests.
-- **Outbound**: Implementations for data access using PostgreSQL.
+### Backend Structure
+- **Core**: Contains domain models, application use cases, and ports for repositories.
+- **Adapters**: 
+  - **Inbound**: HTTP routes for managing requests.
+  - **Outbound**: Implementations for interacting with PostgreSQL.
+- **Infrastructure**: Database client and server setup.
 
 ## Setup & Run Instructions
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd fuel-eu-maritime-compliance/backend
-   ```
 
+### Frontend
+1. Navigate to the `frontend` directory.
 2. Install dependencies:
    ```
    npm install
    ```
-
-3. Set up the environment variables:
-   - Copy `.env.example` to `.env` and configure your database connection.
-
-4. Run the database migrations and seed the database:
-   ```
-   npx prisma migrate dev
-   npx prisma db seed
-   ```
-
-5. Start the server:
+3. Start the development server:
    ```
    npm run dev
    ```
 
-## API Endpoints
-- **Routes**
-  - `GET /routes`: Fetch all routes.
-  - `POST /routes/:id/baseline`: Set a route as baseline.
-  - `GET /routes/comparison`: Get comparison data for routes.
+### Backend
+1. Navigate to the `backend` directory.
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Set up the database by running migrations and seeding data.
+4. Start the backend server:
+   ```
+   npm run dev
+   ```
 
-- **Compliance**
-  - `GET /compliance/cb`: Compute compliance balance.
-  - `GET /compliance/adjusted-cb`: Get adjusted compliance balance.
+## How to Execute Tests
+- For the frontend, run:
+  ```
+  npm test
+  ```
+- For the backend, run:
+  ```
+  npm test
+  ```
 
-- **Banking**
-  - `GET /banking/records`: Fetch banking records.
-  - `POST /banking/bank`: Bank positive compliance balance.
-  - `POST /banking/apply`: Apply banked surplus.
+## Screenshots or Sample Requests/Responses
+- **Routes Tab**: Displays a table of routes with options to filter and set baselines.
+- **Compare Tab**: Shows a comparison of baseline vs. other routes with visual charts.
+- **Banking Tab**: Manages compliance balance banking operations.
+- **Pooling Tab**: Handles pooling of ships and compliance balance adjustments.
 
-- **Pooling**
-  - `POST /pools`: Create a new pool.
-
-## Testing
-To run the tests, use:
-```
-npm run test
-```
-
-## Observations
-This backend service is designed to be scalable and maintainable, adhering to best practices in software architecture and development. The use of TypeScript ensures type safety and better developer experience.
-
-## License
-This project is licensed under the MIT License.
+For detailed API requests and responses, refer to the backend documentation in `backend/README.md`.
