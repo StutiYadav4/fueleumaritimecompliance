@@ -1,10 +1,3 @@
-
----
-
-# **reflection.md**  
-*(Written exactly in the tone you requested — personal, sincere, student-like, honest.)*
-
-```md
 # Reflection
 
 Working on this FuelEU Maritime Dashboard project was honestly one of the most challenging but also one of the most rewarding experiences I’ve had so far. I learned a lot about backend architecture, React UI work, energy formulas, and even real maritime policy details that I never thought I’d actually understand.
