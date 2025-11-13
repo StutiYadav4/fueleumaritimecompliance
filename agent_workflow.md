@@ -196,13 +196,13 @@ This agent ensures **backend logic stays database-independent**.
 
 ## **(A) Computing CB**
 
-1. User enters shipId + year  
+1. User enters `shipId` + `year`  
 2. Frontend validates  
-3. API client calls `/compliance/cb`  
-4. Express extracts inputs  
-5. Repo fetches route  
-6. Core computes CB  
-7. Express returns:
+3. API client calls **`GET /compliance/cb`**  
+4. Express extracts parameters  
+5. Repository fetches matching route  
+6. Core logic computes Compliance Balance (CB)  
+7. Express returns the shaped response:
 
 ```json
 {
@@ -210,97 +210,97 @@ This agent ensures **backend logic stays database-independent**.
   "cb_after": -340.95,
   "applied": 0
 }
-```
-(B) Banking surplus
-UI calls bankSurplus(shipId, year)
 
-Express fetches route
+## (B) Banking Surplus
 
-Core calculates CB
+1. UI calls **`bankSurplus(shipId, year)`**
+2. Express fetches the route
+3. Core computes CB (surplus or deficit)
+4. Repository inserts a **positive bank entry**
+5. Express returns an updated CB snapshot
 
-Repo inserts positive bank entry
+---
 
-New CB snapshot returned
+## (C) Applying Surplus
 
-(C) Applying surplus
-UI calls applyBankSurplus
+1. UI calls **`applyBankSurplus(shipId, year)`**
+2. Core identifies the **deficit amount**
+3. Repository checks **available banked surplus**
+4. System applies:
+  min(deficit, availableSurplus)
 
-Core determines deficit
+5. A **negative bank entry** is inserted
+6. Updated CB values are returned to the UI
 
-Repo checks available bank
+---
 
-Applies min(deficit, available)
+## (D) Pooling Workflow
 
-Inserts negative bank entry
+1. User adds pool members with their `cbBefore`
+2. UI validates:
 
-Returns updated values
+   - **Pool sum ≥ 0**
 
-(D) Pooling workflow
-User adds members with cbBefore
+3. UI calls **`POST /pools`**
+4. Express validates the payload
+5. Core pooling logic redistributes CB across ships
+6. Repository persists:
 
-UI validates pool sum
+   - pool record  
+   - pool members with `cbAfter`
 
-Calls /pools
+7. UI displays the before/after results table
 
-Express validates members
+---
 
-Core pooling agent redistributes
+# 5. 🧪 Testing Agents
 
-Repo persists
+Full testing covers all layers:
 
-UI shows before/after table
+### ✔ Unit Tests
+- `computeCB`
+- `comparison`
+- `pooling`
 
-5. 🧪 Testing Agents
-The testing workflow validates:
+### ✔ Integration Tests
+- `GET /routes`
+- `GET /routes/comparison`
+- `POST /banking/bank`
+- `POST /banking/apply`
+- `POST /pools`
 
-✔ Unit Tests
-computeCB
+### ✔ Database Tests
+- Uses **pg-mem** (an in-memory PostgreSQL emulator)
+- Safe, isolated, deterministic database behavior
 
-comparison
+---
 
-pooling
+# 6. ⭐ Final Summary
 
-✔ Integration Tests
-GET /routes
+This agent-driven architecture ensures:
 
-GET /comparison
+- Clean separation of concerns  
+- High maintainability  
+- Easy debugging  
+- Accurate FuelEU calculations  
+- Predictable, testable behavior  
+- Scalable design for future extensions  
 
-POST /bank
+### Final Signal Flow
 
-POST /apply
-
-POST /pools
-
-✔ Database Tests
-Using pg-mem (in-memory Postgres) for safe testing.
-
-6. ⭐ Final Summary
-This agent-driven structure guarantees:
-
-Clean separation of UI / logic / database
-
-High maintainability
-
-Easy debugging
-
-Accurate FuelEU computations
-
-Full understanding of end-to-end flow
-
-Scalable structure for future features
-
-Final signal flow:
-pgsql
-Copy code
 UI Agent
- ↓
+↓
 API Client Agent
- ↓
-HTTP Agent
- ↓
+↓
+HTTP Agent (Express)
+↓
 Core Logic Agents
- ↓
-Database Agent
- ↓
+↓
+Database Agent (Postgres)
+↓
 Back to UI
-It is fully modular, testable, and aligns with professional backend architecture standards.
+
+The system is fully modular, testable, and aligned with professional backend patterns.
+
+
+
