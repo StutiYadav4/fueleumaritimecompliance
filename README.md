@@ -46,16 +46,19 @@ The project follows a hexagonal architecture (Ports & Adapters / Clean Architect
    ```
 
 ## How to Execute Tests
-- For the frontend, run:
-  ```
-  npm test
-  ```
+
 - For the backend, run:
   ```
   npm test
   ```
 
 ## Screenshots or Sample Requests/Responses
+
+<img width="1691" height="770" alt="image" src="https://github.com/user-attachments/assets/8b213e07-500e-41c4-aee9-4ea4449de7ec" />
+
+<img width="1635" height="686" alt="image" src="https://github.com/user-attachments/assets/38985383-7c7c-4d76-9d2e-a9ff92c3388b" />
+
+
 - **Routes Tab**: Displays a table of routes with options to filter and set baselines.
 - **Compare Tab**: Shows a comparison of baseline vs. other routes with visual charts.
 - **Banking Tab**: Manages compliance balance banking operations.
