@@ -64,4 +64,3 @@ The project follows a hexagonal architecture (Ports & Adapters / Clean Architect
 - **Banking Tab**: Manages compliance balance banking operations.
 - **Pooling Tab**: Handles pooling of ships and compliance balance adjustments.
 
-For detailed API requests and responses, refer to the backend documentation in `backend/README.md`.
